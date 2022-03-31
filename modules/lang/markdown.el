@@ -12,5 +12,4 @@ To be used with `markdown-live-preview-window-function'."
       (xwidget-webkit-browse-url uri)
       xwidget-webkit-last-session-buffer))
   (setq markdown-live-preview-window-function
-		'+markdown-live-preview-window-xwidget-webkit)
-  )
+		'+markdown-live-preview-window-xwidget-webkit))

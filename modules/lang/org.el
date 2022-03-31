@@ -31,3 +31,18 @@
 
 (use-package valign
   :hook (org-mode . valign-mode))
+
+(use-package toc-org
+  :hook ((markdown-mode . toc-org-mode)
+		 (org-mode . toc-org-mode)))
+
+(use-package deft
+  :commands (deft)
+  :custom
+  (deft-extensions '("org" "md" "txt"))
+  (deft-directory "~/orgs/")
+  (deft-use-filename-as-title t))
+
+(use-package zetteldeft
+  :after deft
+  :config (zetteldeft-set-classic-keybindings))

@@ -84,6 +84,4 @@
   :hook (prog-mode . display-line-numbers-mode))
 
 (use-package exec-path-from-shell
-  :defer 3
   :hook (after-init . exec-path-from-shell-initialize))
-

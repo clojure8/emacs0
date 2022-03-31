@@ -12,3 +12,6 @@
 ;;代码格式化
 (use-package prettier :defer t)
 (use-package apheleia :defer t)
+
+(use-package quickrun
+  :commands (quickrun))

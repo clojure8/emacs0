@@ -4,33 +4,33 @@
 
 ;;; emacs settings
 (setq-default auto-save-default nil	   ; disable auto save
-	      create-lockfiles nil
-	      tab-width 4
-	      auto-window-vscroll nil
-	      ns-use-proxy-icon nil  ; hide titlebar icon
-	      delete-by-moving-to-trash t  ; disable delete directly
-	      fast-but-imprecise-scrolling t
-	      frame-title-format nil
-	      help-window-select t
-	      inhibit-startup-screen t	   ; disable the startup screen splash
-	      inhibit-default-init t
-	      ;; initial-scratch-message nil
-	      inhibit-compacting-font-caches t
-	      Make-backup-files nil             ; disable backup file
-	      ;; Mouse wheel scroll behavior
-	      ;; mouse-wheel-scroll-amount '(1 ((shift) . 1))
-	      mouse-wheel-progressive-speed nil
-	      mouse-wheel-follow-mouse t
-	      next-line-add-newlines nil
-	      read-process-output-max (* 64 1024)
-	      scroll-step 1
-	      scroll-conservatively 10000
-	      scroll-preserve-screen-position t
-	      scroll-up-aggressively 0.01
-	      scroll-down-aggressively 0.01
-	      visible-bell nil
-	      ring-bell-function 'ignore
-	      )
+			  create-lockfiles nil
+			  tab-width 4
+			  auto-window-vscroll nil
+			  ns-use-proxy-icon nil  ; hide titlebar icon
+			  delete-by-moving-to-trash t  ; disable delete directly
+			  fast-but-imprecise-scrolling t
+			  frame-title-format nil
+			  help-window-select t
+			  inhibit-startup-screen t	   ; disable the startup screen splash
+			  inhibit-default-init t
+			  ;; initial-scratch-message nil
+			  inhibit-compacting-font-caches t
+			  make-backup-files nil             ; disable backup file
+			  ;; Mouse wheel scroll behavior
+			  ;; mouse-wheel-scroll-amount '(1 ((shift) . 1))
+			  mouse-wheel-progressive-speed nil
+			  mouse-wheel-follow-mouse t
+			  next-line-add-newlines nil
+			  read-process-output-max (* 64 1024)
+			  scroll-step 1
+			  scroll-conservatively 10000
+			  scroll-preserve-screen-position t
+			  scroll-up-aggressively 0.01
+			  scroll-down-aggressively 0.01
+			  visible-bell nil
+			  ring-bell-function 'ignore
+			  )
 
 ;;; system coding
 ;; although others may add many other settings here,
@@ -49,11 +49,22 @@
 ;; <macOS> Command -> Meta, Option -> Super
 (when (eq system-type 'darwin)
   (setq mac-command-modifier 'meta
-	mac-option-modifier 'super))
+		mac-option-modifier 'super)
+  (global-set-key (kbd "M-a") 'mark-whole-buffer) ;;对应Ctrl-a 全选
+  (global-set-key (kbd "M-c") 'kill-ring-save) ;;对应Ctrl-c 复制
+  (global-set-key (kbd "M-s") 'save-buffer) ;; 对应Ctrl-s 保存
+  (global-set-key (kbd "M-v") 'yank) ;对应Ctrl-v 粘贴
+  (global-set-key (kbd "M-z") 'undo) ;对应Ctrol-z 撤销
+  (global-set-key (kbd "M-x") 'kill-region) ;对应Ctrol-x 剪
+  )
 
 ;; 像素滚动
 (when (>= emacs-major-version 29)
-	(add-hook 'after-init-hook #'pixel-scroll-precision-mode))
+  (add-hook 'after-init-hook #'pixel-scroll-precision-mode))
+
+;;让鼠标滚动更好用
+(setq mouse-wheel-scroll-amount '(1 ((shift) . 1) ((control) . nil)))
+(setq mouse-wheel-progressive-speed nil)
 
 ;; lambda显示为λ
 (add-hook 'prog-mode-hook #'global-prettify-symbols-mode)

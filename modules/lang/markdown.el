@@ -13,3 +13,13 @@ To be used with `markdown-live-preview-window-function'."
       xwidget-webkit-last-session-buffer))
   (setq markdown-live-preview-window-function
 		'+markdown-live-preview-window-xwidget-webkit))
+
+
+(use-package json-mode
+  :defer t)
+
+(use-package yaml-mode
+  :defer t)
+
+(use-package toml-mode
+  :defer t)

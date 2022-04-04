@@ -22,13 +22,13 @@
 				 '((((background light))
 					:background "#d7d9dc" :height 0.1 :box nil)
 				   (t
-					:background "#000000" :height 0.1 :box nil)))
+					:background "#444647" :height 0.1 :box nil)))
 
   (face-spec-set 'mini-modeline-mode-line
 				 '((((background light))
-					:background "#778899" :height 0.1 :box nil)
+					:background "#d7d9dc" :height 0.1 :box nil)
                    (t
-					:background "#606161" :height 0.1 :box nil)))
+					:background "#444647" :height 0.1 :box nil)))
 
   (defun my/date-info ()
     (format-time-string "[%m-%d %H:%M:%S %a]"))

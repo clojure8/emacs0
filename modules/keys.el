@@ -2,8 +2,25 @@
 
 ;;; code:
 (use-package general
+  :init
+  (setq general-override-states '(insert
+                                  emacs
+                                  hybrid
+                                  normal
+                                  visual
+                                  motion
+                                  operator
+                                  replace))
   :config
   (general-define-key
+   :states '(normal visual motion)
+   :keymaps 'dired-mode-map
+   :keymaps 'override
+   "RET" 'dired-find-file)
+
+  (general-define-key
+   :states '(normal visual motion)
+   :keymaps 'override
    "M-p" 'consult-buffer
    "s-p" 'consult-buffer
    "M-z" 'evil-undo
@@ -89,4 +106,4 @@
 (use-package evil-collection
   :after evil
   :config
-  (evil-collection-init '(calendar dired calc ediff magit vterm org)))
+  (evil-collection-init '(calendar calc ediff org vterm)))

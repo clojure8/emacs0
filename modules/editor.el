@@ -43,7 +43,9 @@
   (setq wgrep-auto-save-buffer t)
   (setq wgrep-change-readonly-file t))
 
-(use-package flycheck
-  :hook (prog-mode . global-flycheck-mode))
+(use-package flycheck :defer t)
 
 (use-package consult-flycheck :after (consult flycheck))
+
+(use-package puni
+  :hook ((prog-mode sgml-mode nxml-mode tex-mode eval-expression-minibuffer-setup) . puni-mode))

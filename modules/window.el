@@ -7,6 +7,8 @@
 
 (use-package popper
   :defer t
+  :custom
+  ((popper-window-height 16))
   :bind (("M-`"   . popper-toggle-latest)
          ("C-`"   . popper-cycle)
          ("C-M-`" . popper-toggle-type))
@@ -20,6 +22,7 @@
 		  "*eshell*"
 		  "*quickrun*"
 		  "*devdocs*"
+		  "*Go-Translate*"
           help-mode
           compilation-mode))
   (popper-mode +1)

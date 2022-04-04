@@ -19,46 +19,43 @@
 (use-package orderless
   :after vertico
   :config
-  (defun +vertico-orderless-dispatch (pattern _index _total)
-    (cond
-     ;; Ensure $ works with Consult commands, which add disambiguation suffixes
-     ((string-suffix-p "$" pattern)
-      `(orderless-regexp . ,(concat (substring pattern 0 -1) "[\x100000-\x10FFFD]*$")))
-     ;; Ignore single !
-     ((string= "!" pattern) `(orderless-literal . ""))
-     ;; Without literal
-     ((string-prefix-p "!" pattern) `(orderless-without-literal . ,(substring pattern 1)))
-     ;; Character folding
-     ((string-prefix-p "%" pattern) `(char-fold-to-regexp . ,(substring pattern 1)))
-     ((string-suffix-p "%" pattern) `(char-fold-to-regexp . ,(substring pattern 0 -1)))
-     ;; Initialism matching
-     ((string-prefix-p "`" pattern) `(orderless-initialism . ,(substring pattern 1)))
-     ((string-suffix-p "`" pattern) `(orderless-initialism . ,(substring pattern 0 -1)))
-     ;; Literal matching
-     ((string-prefix-p "=" pattern) `(orderless-literal . ,(substring pattern 1)))
-     ((string-suffix-p "=" pattern) `(orderless-literal . ,(substring pattern 0 -1)))
-     ;; Flex matching
-     ((string-prefix-p "~" pattern) `(orderless-flex . ,(substring pattern 1)))
-     ((string-suffix-p "~" pattern) `(orderless-flex . ,(substring pattern 0 -1)))))
+  ;; (defun +vertico-orderless-dispatch (pattern _index _total)
+  ;; (cond
+  ;;  ;; Ensure $ works with Consult commands, which add disambiguation suffixes
+  ;;  ((string-suffix-p "$" pattern)
+  ;;   `(orderless-regexp . ,(concat (substring pattern 0 -1) "[\x100000-\x10FFFD]*$")))
+  ;;  ;; Ignore single !
+  ;;  ((string= "!" pattern) `(orderless-literal . ""))
+  ;;  ;; Without literal
+  ;;  ((string-prefix-p "!" pattern) `(orderless-without-literal . ,(substring pattern 1)))
+  ;;  ;; Character folding
+  ;;  ((string-prefix-p "%" pattern) `(char-fold-to-regexp . ,(substring pattern 1)))
+  ;;  ((string-suffix-p "%" pattern) `(char-fold-to-regexp . ,(substring pattern 0 -1)))
+  ;;  ;; Initialism matching
+  ;;  ((string-prefix-p "`" pattern) `(orderless-initialism . ,(substring pattern 1)))
+  ;;  ((string-suffix-p "`" pattern) `(orderless-initialism . ,(substring pattern 0 -1)))
+  ;;  ;; Literal matching
+  ;;  ((string-prefix-p "=" pattern) `(orderless-literal . ,(substring pattern 1)))
+  ;;  ((string-suffix-p "=" pattern) `(orderless-literal . ,(substring pattern 0 -1)))
+  ;;  ;; Flex matching
+  ;;  ((string-prefix-p "~" pattern) `(orderless-flex . ,(substring pattern 1)))
+  ;;  ((string-suffix-p "~" pattern) `(orderless-flex . ,(substring pattern 0 -1)))))
   (setq completion-styles '(orderless)
         completion-category-defaults nil
         ;; note that despite override in the name orderless can still be used in
         ;; find-file etc.
         completion-category-overrides '((file (styles orderless partial-completion)))
-        orderless-style-dispatchers '(+vertico-orderless-dispatch)
+        ;; orderless-style-dispatchers '(+vertico-orderless-dispatch)
         orderless-component-separator "[ &]")
   ;; ...otherwise find-file gets different highlighting than other commands
   (set-face-attribute 'completions-first-difference nil :inherit nil))
-
 
 (use-package consult
   ;; Enable automatic preview at point in the *Completions* buffer. This is
   ;; relevant when you use the default completion UI.
   :hook (completion-list-mode . consult-preview-at-point-mode)
 
-  ;; The :init configuration is always executed (Not lazy)
   :init
-
   ;; Optionally configure the register formatting. This improves the register
   ;; preview for `consult-register', `consult-register-load',
   ;; `consult-register-store' and the Emacs built-ins.
@@ -116,7 +113,7 @@
   ;; (setq consult-project-function (lambda (_) (vc-root-dir)))
   ;;;; 4. locate-dominating-file
   ;; (setq consult-project-function (lambda (_) (locate-dominating-file "." ".git")))
-)
+  )
 
 (use-package consult-dir
   :after consult
@@ -165,3 +162,24 @@
   :after (yasnippet))
 
 (use-package gitignore-templates :defer t)
+
+(use-package pyim
+  :after vertico
+  :config
+  (defun eh-orderless-regexp (orig_func component)
+    (let ((result (funcall orig_func component)))
+      (pyim-cregexp-build result)))
+
+  (defun toggle-chinese-search ()
+    (interactive)
+    (if (not (advice-member-p #'eh-orderless-regexp 'orderless-regexp))
+		(advice-add 'orderless-regexp :around #'eh-orderless-regexp)
+      (advice-remove 'orderless-regexp #'eh-orderless-regexp)))
+
+  (defun disable-py-search (&optional args)
+    (if (advice-member-p #'eh-orderless-regexp 'orderless-regexp)
+		(advice-remove 'orderless-regexp #'eh-orderless-regexp)))
+
+  ;; (advice-add 'exit-minibuffer :after #'disable-py-search)
+  (add-hook 'minibuffer-exit-hook 'disable-py-search)
+  )

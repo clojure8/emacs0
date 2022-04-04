@@ -27,8 +27,7 @@
   (setq doom-themes-treemacs-theme "doom-colors")
   (doom-themes-treemacs-config))
 
-;; (use-package chocolate-theme :defer t)
-;; (use-package tron-legacy-theme :defer t)
-;; (use-package sublime-themes :defer t)
 (use-package kaolin-themes :defer t)
-;; (use-package modus-themes :defer t)
+(use-package cyberpunk-theme :defer t)
+(use-package stimmung-themes :defer t)
+(use-package humanoid-themes :defer t)

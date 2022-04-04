@@ -28,6 +28,11 @@
                        ("melpa" . "https://melpa.org/packages/")
                        ("gnu" . "https://elpa.gnu.org/packages/")))
   (package-initialize)
+
+  ;;防止反复调用 package-refresh-contents 会影响加载速度
+  (when (not package-archive-contents)
+	(package-refresh-contents))
+
   (unless (package-installed-p 'use-package)
     (package-refresh-contents)
 	(package-install 'use-package))
@@ -47,11 +52,13 @@
   (add-to-list 'recentf-exclude my/var-directory)))
 
 (add-hook 'after-init-hook 
-  (lambda ()
-    ;; write over selected text on input... like all modern editors do
-    (delete-selection-mode t)
-    (global-hl-line-mode +1)
-    (recentf-mode +1)))
+		  (lambda ()
+			;; write over selected text on input... like all modern editors do
+			(delete-selection-mode t)
+			;; 自动加载修改过的文件
+			(global-auto-revert-mode 1)
+			(global-hl-line-mode +1)
+			(recentf-mode +1)))
 
 (setq auto-save-file-name-transforms `((".*" ,(no-littering-expand-var-file-name "auto-save/") t)))
 (setq custom-file (no-littering-expand-etc-file-name "custom.el"))

@@ -15,3 +15,5 @@
 
 (use-package quickrun
   :commands (quickrun))
+
+(add-hook 'prog-mode-hook #'electric-pair-mode)

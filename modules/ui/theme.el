@@ -24,8 +24,10 @@
         doom-themes-enable-italic t) ; if nil, italics is universally disabled
   (add-hook 'after-init-hook (lambda () (load-theme my-theme t)))
   (doom-themes-org-config)
-  (setq doom-themes-treemacs-theme "doom-colors")
-  (doom-themes-treemacs-config))
+  ;; (setq doom-themes-treemacs-theme "doom-colors")
+  ;; (doom-themes-treemacs-config)
+
+  )
 
 (use-package kaolin-themes :defer t)
 (use-package cyberpunk-theme :defer t)

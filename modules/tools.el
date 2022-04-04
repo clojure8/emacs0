@@ -2,8 +2,8 @@
 (use-package magit :defer t)
 
 (use-package all-the-icons :defer t)
-(use-package treemacs :commands (treemacs))
 
+(use-package treemacs :commands (treemacs))
 
 (use-package vterm :defer t
   :hook (vterm-mode . turn-off-evil-mode))

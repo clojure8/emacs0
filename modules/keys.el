@@ -106,4 +106,4 @@
 (use-package evil-collection
   :after evil
   :config
-  (evil-collection-init '(calendar calc ediff org vterm)))
+  (evil-collection-init '(calendar magit calc ediff org vterm)))

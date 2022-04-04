@@ -23,6 +23,7 @@
 		  "*quickrun*"
 		  "*devdocs*"
 		  "*Go-Translate*"
+		  "*PLANTUML Preview*"
           help-mode
           compilation-mode))
   (popper-mode +1)

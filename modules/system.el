@@ -13,8 +13,8 @@
 			  frame-title-format nil
 			  help-window-select t
 			  inhibit-startup-screen t	   ; disable the startup screen splash
-			  inhibit-default-init t
-			  ;; initial-scratch-message nil
+			  ;; inhibit-default-init t
+			  initial-scratch-message nil
 			  inhibit-compacting-font-caches t
 			  make-backup-files nil             ; disable backup file
 			  ;; Mouse wheel scroll behavior
@@ -23,13 +23,37 @@
 			  mouse-wheel-follow-mouse t
 			  next-line-add-newlines nil
 			  read-process-output-max (* 64 1024)
-			  scroll-step 1
+			  visible-bell nil
+			  ring-bell-function 'ignore
+
+			  confirm-kill-emacs 'yes-or-no-p                  ; Confirm before exiting Emacs
+
+			  ;; left-margin-width 1
+			  ;; right-margin-width 1         ; Add left and right margins
+
+			  mode-require-final-newline 'visit                ; Add a newline at EOF on visit
+			  mouse-yank-at-point t                            ; Yank at point rather than pointer
+			  ns-use-srgb-colorspace nil                       ; Don't use sRGB colors
+			  recenter-positions '(5 top bottom)               ; Set re-centering positions
+			  redisplay-dont-pause t                           ; don't pause display on input
+			  debug-on-error t
+			  jit-lock-defer-time 0
+			  frame-resize-pixelwise t
+			  fast-but-imprecise-scrolling t
 			  scroll-conservatively 10000
 			  scroll-preserve-screen-position t
 			  scroll-up-aggressively 0.01
 			  scroll-down-aggressively 0.01
-			  visible-bell nil
-			  ring-bell-function 'ignore
+			  scroll-margin 1                                  ; scroll N lines to screen edge
+			  scroll-step 1                                    ; keyboard scroll one line at a time
+			  select-enable-clipboard t                        ; Merge system's and Emacs' clipboard
+			  sentence-end-double-space nil                    ; End a sentence after a dot and a space
+			  show-trailing-whitespace nil                     ; Display trailing whitespaces
+			  split-height-threshold nil                       ; Disable vertical window splitting
+			  split-width-threshold nil                        ; Disable horizontal window splitting
+			  uniquify-buffer-name-style 'forward              ; Uniquify buffer names
+			  window-combination-resize t                      ; Resize windows proportionally
+			  x-stretch-cursor t                              ; Stretch cursor to the glyph width
 			  )
 
 ;;; system coding

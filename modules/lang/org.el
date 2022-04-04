@@ -136,3 +136,9 @@ Only search the range between just after the point and BOUND."
         org-roam-ui-follow t
         org-roam-ui-update-on-save t
         org-roam-ui-open-on-start t))
+
+(use-package plantuml-mode
+  :commands (plantuml-preview)
+  :config
+  (setq plantuml-executable-path "~/mytools/plantuml/bin/plantuml")
+  (setq plantuml-default-exec-mode 'executable))

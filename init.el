@@ -57,8 +57,9 @@
 			(delete-selection-mode t)
 			;; 自动加载修改过的文件
 			(global-auto-revert-mode 1)
-			(global-hl-line-mode +1)
 			(recentf-mode +1)))
+
+(add-hook 'prog-mode-hook  #'hl-line-mode)
 
 (setq auto-save-file-name-transforms `((".*" ,(no-littering-expand-var-file-name "auto-save/") t)))
 (setq custom-file (no-littering-expand-etc-file-name "custom.el"))

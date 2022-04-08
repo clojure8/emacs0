@@ -33,8 +33,7 @@
    "M-s" 'save-buffer
    "s-;" 'yas-expand
    "C-x k" 'kill-current-buffer
-   "C-c g" 'golden-ratio
-   "C-c C-c" 'er/expand-region)
+   "C-c g" 'golden-ratio)
 
   (general-create-definer g-leader-def
     :states '(normal insert visual emacs)

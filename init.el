@@ -63,6 +63,7 @@
 
 (setq auto-save-file-name-transforms `((".*" ,(no-littering-expand-var-file-name "auto-save/") t)))
 (setq custom-file (no-littering-expand-etc-file-name "custom.el"))
+(load custom-file)
 (defvar temporary-file-directory "~/.emacs.d/var/tmp")
 (setq backup-directory-alist `((".*" . ,temporary-file-directory)))
 
@@ -88,7 +89,8 @@
 
 (cl-defun load-modules (&optional (modules-dir "modules"))
   (let ((dir (expand-file-name modules-dir user-emacs-directory)))
-	(load-dir dir my-libs-loaded)
-	(f-directories dir (lambda (d) (load-modules d)))))
+	(when (f-directory? dir)
+	  (load-dir dir my-libs-loaded)
+	  (f-directories dir (lambda (d) (load-modules d))))))
 
 (load-modules)

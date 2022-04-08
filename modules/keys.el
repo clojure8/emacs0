@@ -1,6 +1,6 @@
-;; -*- coding: utf-8; lexical-binding: t; -*-
+;;-*- coding: utf-8; lexical-binding: t; -*-
+;;;code:
 
-;;; code:
 (use-package general
   :init
   (setq general-override-states '(insert
@@ -25,7 +25,6 @@
    "s-p" 'consult-buffer
    "M-z" 'evil-undo
    "M-x" 'execute-extended-command
-   "s-x" 'execute-extended-command
    "M-v" 'evil-paste-after
    "s-/" 'comment-line
    "M-/" 'comment-line
@@ -100,6 +99,8 @@
   :init
   (setq evil-want-integration t)
   (setq evil-want-keybinding nil)
+
+  (setq evil-undo-system 'undo-fu)
   :hook
   (after-init . evil-mode))
 

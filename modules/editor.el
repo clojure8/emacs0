@@ -49,3 +49,16 @@
 
 (use-package puni
   :hook ((prog-mode sgml-mode nxml-mode tex-mode eval-expression-minibuffer-setup) . puni-mode))
+
+
+(setq mark-ring-max 100)
+(setq global-mark-ring-max 100)
+(defun xah-pop-local-mark-ring ()
+  "Move cursor to last mark position of current buffer.
+Call this repeatedly will cycle all positions in `mark-ring'.
+URL `http://xahlee.info/emacs/emacs/emacs_jump_to_previous_position.html'
+Version 2016-04-04"
+  (interactive)
+  (set-mark-command t))
+(global-set-key (kbd "<f7>") 'pop-global-mark)
+(global-set-key (kbd "<f8>") 'xah-pop-local-mark-ring)

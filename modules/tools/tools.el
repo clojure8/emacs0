@@ -7,7 +7,7 @@
 (use-package vterm :defer t
   :hook (vterm-mode . turn-off-evil-mode))
 
-;; (use-package crux :defer t)
+(use-package crux :defer t)
 
 ;; (use-package dtache
 ;;   :commands (dtache-eshell-send-input dtache-shell-command)
@@ -73,3 +73,15 @@
 		 ))
   )
 
+(use-package undo-fu
+  :commands (undo-fu-only-undo undo-fu-only-redo)
+  :config
+  (global-unset-key (kbd "C-z"))
+  (global-set-key (kbd "C-z")   'undo-fu-only-undo)
+  (global-set-key (kbd "C-S-z") 'undo-fu-only-redo))
+
+(use-package undo-fu-session
+  :after undo-fu
+  :config
+  (setq undo-fu-session-incompatible-files '("/COMMIT_EDITMSG\\'" "/git-rebase-todo\\'"))
+  (global-undo-fu-session-mode +1))

@@ -53,7 +53,7 @@
 			  split-width-threshold nil                        ; Disable horizontal window splitting
 			  uniquify-buffer-name-style 'forward              ; Uniquify buffer names
 			  window-combination-resize t                      ; Resize windows proportionally
-			  x-stretch-cursor t                              ; Stretch cursor to the glyph width
+			  ;; x-stretch-cursor t                              ; Stretch cursor to the glyph width
 			  )
 
 ;;; system coding
@@ -79,7 +79,7 @@
   (global-set-key (kbd "M-s") 'save-buffer) ;; 对应Ctrl-s 保存
   (global-set-key (kbd "M-v") 'yank) ;对应Ctrl-v 粘贴
   (global-set-key (kbd "M-z") 'undo) ;对应Ctrol-z 撤销
-  (global-set-key (kbd "M-x") 'kill-region) ;对应Ctrol-x 剪
+  (global-set-key (kbd "s-x") 'kill-region) ;对应Ctrol-x 剪
   )
 
 ;; 像素滚动
@@ -114,9 +114,16 @@
 			;; (set-font "" "华文楷体" 11 15)
 			(setq visible-bell nil)))
 
+;; 默认打开浏览器设置
+(setq browse-url-browser-function 'browse-url-generic
+      browse-url-generic-program "/Applications/Google Chrome.app/Contents/MacOs/Google Chrome")
+;; (setq browse-url-browser-function 'xwidget-webkit-browse-url)
+
 (use-package display-line-numbers
   :ensure nil
   :hook (prog-mode . display-line-numbers-mode))
 
 (use-package exec-path-from-shell
-  :hook (after-init . exec-path-from-shell-initialize))
+  :commands (exec-path-from-shell-copy-env exec-path-from-shell-initialize)
+  :hook (after-init . exec-path-from-shell-initialize)
+  )

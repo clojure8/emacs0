@@ -4,6 +4,7 @@
 
 ;;; emacs settings
 (setq-default auto-save-default nil	   ; disable auto save
+			  truncate-lines nil
 			  create-lockfiles nil
 			  tab-width 4
 			  auto-window-vscroll nil

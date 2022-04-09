@@ -181,5 +181,5 @@
 		(advice-remove 'orderless-regexp #'eh-orderless-regexp)))
 
   ;; (advice-add 'exit-minibuffer :after #'disable-py-search)
-  (add-hook 'minibuffer-exit-hook 'disable-py-search)
+  ;; (add-hook 'minibuffer-exit-hook 'disable-py-search)
   )

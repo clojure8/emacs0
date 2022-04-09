@@ -34,6 +34,8 @@
 (unless (display-graphic-p)
   (menu-bar-mode -1))
 
+(setenv "LIBRARY_PATH" "/usr/local/opt/gcc/lib/gcc/11:/usr/local/opt/gcc/lib/gcc/11/gcc/x86_64-apple-darwin21/11")
+
 (when (featurep 'ns)
   ;; 去除titlebar
   ;; (add-to-list 'default-frame-alist '(undecorated . t))

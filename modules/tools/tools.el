@@ -9,10 +9,10 @@
 
 (use-package crux :defer t)
 
-;; (use-package dtache
-;;   :commands (dtache-eshell-send-input dtache-shell-command)
-;;   :config
-;;   (dtache-shell-setup))
+(use-package dtache
+  :commands (dtache-eshell-send-input dtache-shell-command)
+  :config
+  (dtache-shell-setup))
 
 (use-package devdocs :defer t)
 (use-package avy :defer t)
@@ -21,13 +21,9 @@
   :defer t
   :bind
   ("C-c l o" . link-hint-open-link)
-  ("C-c l c" . link-hint-copy-link)
-  :config
-  (setq browse-url-browser-function 'browse-url-chromium))
+  ("C-c l c" . link-hint-copy-link))
 
 (use-package which-key :defer t)
-
-;; (use-package format-all :defer t)
 
 (use-package go-translate
   :commands
@@ -51,7 +47,7 @@
 
 		 :engines ; 翻译引擎，可以配置多个。另外可以传入不同的 Parser 从而使用不同样式的输出
 		 (list
-          (gts-bing-engine)
+          ;; (gts-bing-engine)
           ;;(gts-google-engine)
           ;;(gts-google-rpc-engine)
           ;;(gts-deepl-engine :auth-key [YOUR_AUTH_KEY] :pro nil)
@@ -92,3 +88,8 @@
   (interactive "r")
   (align-regexp start end
                 "\\(\\s-*\\)\\s-" 1 0 t))
+
+;; 脱离文档添加注释
+(use-package annotate
+  :hook (prog-mode . annotate-mode)
+  :commands (annotate-annotate))

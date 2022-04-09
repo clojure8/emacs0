@@ -4,9 +4,6 @@
 (use-package rainbow-delimiters
   :hook (prog-mode . rainbow-delimiters-mode))
 
-(use-package smartparens
-  :hook (prog-mode . smartparens-mode))
- 
 (use-package goto-chg :defer t)
 
 (use-package smart-hungry-delete
@@ -26,7 +23,7 @@
   :config
   (global-set-key (kbd "M-=") 'er/expand-region))
 
-(use-package anzu :defer t)
+(use-package anzu )
 (use-package evil-anzu :defer t)
 
 (use-package ws-butler
@@ -49,7 +46,6 @@
 
 (use-package puni
   :hook ((prog-mode sgml-mode nxml-mode tex-mode eval-expression-minibuffer-setup) . puni-mode))
-
 
 (setq mark-ring-max 100)
 (setq global-mark-ring-max 100)

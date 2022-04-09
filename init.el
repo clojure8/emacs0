@@ -63,7 +63,6 @@
 
 (setq auto-save-file-name-transforms `((".*" ,(no-littering-expand-var-file-name "auto-save/") t)))
 (setq custom-file (no-littering-expand-etc-file-name "custom.el"))
-(load custom-file)
 (defvar temporary-file-directory "~/.emacs.d/var/tmp")
 (setq backup-directory-alist `((".*" . ,temporary-file-directory)))
 

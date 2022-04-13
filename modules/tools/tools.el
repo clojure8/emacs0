@@ -11,8 +11,7 @@
 
 (use-package dtache
   :commands (dtache-eshell-send-input dtache-shell-command)
-  :config
-  (dtache-shell-setup))
+  :hook (after-init . dtache-setup))
 
 (use-package devdocs :defer t)
 (use-package avy :defer t)
@@ -69,18 +68,18 @@
 		 ))
   )
 
-(use-package undo-fu
-  :commands (undo-fu-only-undo undo-fu-only-redo)
-  :config
-  (global-unset-key (kbd "C-z"))
-  (global-set-key (kbd "C-z")   'undo-fu-only-undo)
-  (global-set-key (kbd "C-S-z") 'undo-fu-only-redo))
+;; (use-package undo-fu
+;;   :commands (undo-fu-only-undo undo-fu-only-redo)
+;;   :config
+;;   (global-unset-key (kbd "C-z"))
+;;   (global-set-key (kbd "C-z")   'undo-fu-only-undo)
+;;   (global-set-key (kbd "C-S-z") 'undo-fu-only-redo))
 
-(use-package undo-fu-session
-  :after undo-fu
-  :config
-  (setq undo-fu-session-incompatible-files '("/COMMIT_EDITMSG\\'" "/git-rebase-todo\\'"))
-  (global-undo-fu-session-mode +1))
+;; (use-package undo-fu-session
+;;   :after undo-fu
+;;   :config
+;;   (setq undo-fu-session-incompatible-files '("/COMMIT_EDITMSG\\'" "/git-rebase-todo\\'"))
+;;   (global-undo-fu-session-mode +1))
 
 
 (defun my/align-whitespace (start end)
@@ -93,3 +92,22 @@
 (use-package annotate
   :hook (prog-mode . annotate-mode)
   :commands (annotate-annotate))
+
+(use-package vundo
+  :commands (vundo)
+  :load-path "~/elisp/vundo/"
+  :config
+  ;; Take less on-screen space.
+  (setq vundo-compact-display t)
+
+  ;; Better contrasting highlight.
+  (custom-set-faces
+   '(vundo-node ((t (:foreground "#808080"))))
+   '(vundo-stem ((t (:foreground "#808080"))))
+   '(vundo-highlight ((t (:foreground "#FFFF00")))))
+  )
+
+
+(use-package editorconfig :defer t)
+
+(use-package dirvish :defer t)

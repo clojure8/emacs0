@@ -4,6 +4,7 @@
 
 ;;; emacs settings
 (setq-default auto-save-default nil	   ; disable auto save
+			  warning-minimum-level :emergency
 			  truncate-lines nil
 			  create-lockfiles nil
 			  tab-width 4
@@ -27,17 +28,17 @@
 			  visible-bell nil
 			  ring-bell-function 'ignore
 
-			  confirm-kill-emacs 'yes-or-no-p                  ; Confirm before exiting Emacs
+			  ;; confirm-kill-emacs 'yes-or-no-p                  ; Confirm before exiting Emacs
 
 			  ;; left-margin-width 1
 			  ;; right-margin-width 1         ; Add left and right margins
 
-			  mode-require-final-newline 'visit                ; Add a newline at EOF on visit
+			  ;; mode-require-final-newline 'visit                ; Add a newline at EOF on visit
 			  mouse-yank-at-point t                            ; Yank at point rather than pointer
 			  ns-use-srgb-colorspace nil                       ; Don't use sRGB colors
 			  recenter-positions '(5 top bottom)               ; Set re-centering positions
 			  redisplay-dont-pause t                           ; don't pause display on input
-			  debug-on-error t
+			  debug-on-error nil
 			  jit-lock-defer-time 0
 			  frame-resize-pixelwise t
 			  fast-but-imprecise-scrolling t
@@ -79,7 +80,7 @@
   (global-set-key (kbd "M-c") 'kill-ring-save) ;;对应Ctrl-c 复制
   (global-set-key (kbd "M-s") 'save-buffer) ;; 对应Ctrl-s 保存
   (global-set-key (kbd "M-v") 'yank) ;对应Ctrl-v 粘贴
-  (global-set-key (kbd "M-z") 'undo) ;对应Ctrol-z 撤销
+  ;; (global-set-key (kbd "M-z") 'undo) ;对应Ctrol-z 撤销
   (global-set-key (kbd "s-x") 'kill-region) ;对应Ctrol-x 剪
   )
 
@@ -125,6 +126,6 @@
   :hook (prog-mode . display-line-numbers-mode))
 
 (use-package exec-path-from-shell
-  :commands (exec-path-from-shell-copy-env exec-path-from-shell-initialize)
-  :hook (after-init . exec-path-from-shell-initialize)
-  )
+  :commands (exec-path-from-shell-copy-env exec-path-from-shell-initialize))
+
+(use-package names :defer t)

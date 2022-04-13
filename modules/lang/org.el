@@ -142,3 +142,6 @@ Only search the range between just after the point and BOUND."
   :config
   (setq plantuml-executable-path "~/mytools/plantuml/bin/plantuml")
   (setq plantuml-default-exec-mode 'executable))
+
+; (use-package org-real
+;   :commands (org-real-apply org-real-world))

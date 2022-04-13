@@ -50,7 +50,7 @@
 
   ;; 设置初始化启动的窗口大小和位置
   (add-to-list 'default-frame-alist '(width . 142))
-  (add-to-list 'default-frame-alist '(height . 53))
+  (add-to-list 'default-frame-alist '(height . 52))
   (add-to-list 'default-frame-alist '(top . 20))
   (add-to-list 'default-frame-alist '(left . 144))
 

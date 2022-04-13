@@ -24,9 +24,15 @@
 ;; -------------------------------------------------
 (eval-and-compile
   (customize-set-variable
-   'package-archives '(("org" . "https://orgmode.org/elpa/")
+   'package-archives '(
+					   ("org" . "https://orgmode.org/elpa/")
                        ("melpa" . "https://melpa.org/packages/")
-                       ("gnu" . "https://elpa.gnu.org/packages/")))
+                       ("gnu" . "https://elpa.gnu.org/packages/")
+					   ;; ("gnu"   . "http://elpa.zilongshanren.com/gnu/")
+                       ;; ("melpa" . "http://elpa.zilongshanren.com/melpa/")
+					   ;; ("org" . "http://elpa.zilongshanren.com/org/")
+					   ;; ("mepla-stable" . "http://elpa.zilongshanren.com/stable-melpa/")
+					   ))
   (package-initialize)
 
   ;;防止反复调用 package-refresh-contents 会影响加载速度
@@ -45,11 +51,11 @@
   :demand
   :config
   (with-eval-after-load 'recentf
-  (setq my/etc-directory (expand-file-name "var/config/" user-emacs-directory))
-  (setq my/var-directory (expand-file-name "var/data/" user-emacs-directory))
-  (add-to-list 'recentf-exclude (expand-file-name "etc/elpa" user-emacs-directory))
-  (add-to-list 'recentf-exclude my/etc-directory)
-  (add-to-list 'recentf-exclude my/var-directory)))
+	(setq my/etc-directory (expand-file-name "var/config/" user-emacs-directory))
+	(setq my/var-directory (expand-file-name "var/data/" user-emacs-directory))
+	(add-to-list 'recentf-exclude (expand-file-name "etc/elpa" user-emacs-directory))
+	(add-to-list 'recentf-exclude my/etc-directory)
+	(add-to-list 'recentf-exclude my/var-directory)))
 
 (add-hook 'after-init-hook 
 		  (lambda ()
@@ -63,6 +69,7 @@
 
 (setq auto-save-file-name-transforms `((".*" ,(no-littering-expand-var-file-name "auto-save/") t)))
 (setq custom-file (no-littering-expand-etc-file-name "custom.el"))
+(load custom-file 'no-error 'no-message)
 (defvar temporary-file-directory "~/.emacs.d/var/tmp")
 (setq backup-directory-alist `((".*" . ,temporary-file-directory)))
 
@@ -77,7 +84,7 @@
 ;; load all modules
 (use-package f)
 
-(defvar my-libs-loaded (mapcar #'file-name-sans-extension (delq nil (mapcar #'car load-history))))
+(defvar-local my-libs-loaded (mapcar #'file-name-sans-extension (delq nil (mapcar #'car load-history))))
 
 (defun load-dir (f my-libs-loaded)
   (dolist (file (directory-files f t ".+\\.el?$"))

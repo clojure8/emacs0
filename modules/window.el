@@ -20,6 +20,7 @@
 		  "\\*Launch.*\\*$"
 		  "*vterm*"
 		  "*eshell*"
+		  "*Dtache.*"
 		  "*quickrun*"
 		  "*devdocs*"
 		  "*Go-Translate*"

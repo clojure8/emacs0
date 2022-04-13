@@ -1,5 +1,6 @@
 ;;-*- coding: utf-8; lexical-binding: t; -*-
 ;;;code:
+(global-set-key (kbd "M-z") 'vundo)
 
 (use-package general
   :init
@@ -23,11 +24,10 @@
    :keymaps 'override
    "M-p" 'consult-buffer
    "s-p" 'consult-buffer
-   "M-z" 'evil-undo
+   "M-z" 'vundo
    "M-x" 'execute-extended-command
-   "M-v" 'evil-paste-after
    "s-/" 'comment-line
-   "M-/" 'comment-line
+   ;; "M-/" 'comment-line
    "M-f" 'consult-line
    "C-S-p" 'consult-buffer
    "M-s" 'save-buffer
@@ -52,10 +52,6 @@
     :non-normal-prefix "C-,")
   (spc-leader-def
     "SPC" 'execute-extended-command
-	"wu" 'xwidget-webkit-browse-url
-	"wh" 'xwidget-webkit-back
-	"wl" 'xwidget-webkit-forward
-	"ws" 'xwidget-webkit-browse-history
 
 	"wo" 'ace-window
     "ht" 'consult-theme
@@ -69,6 +65,7 @@
     "bl" 'evil-switch-to-windows-last-buffer
     "ff" 'find-file
     "fs" 'swiper
+
     "bk" 'kill-current-buffer
     "gs" 'magit-status
     "gg" 'magit-status
@@ -83,7 +80,7 @@
 	"pg" 'consult-git-grep
     "jj" 'dumb-jump-go
     "jb" 'dumb-jump-back
-    "bu" 'xwidget-webkit-browse-url
+
 	"wu" 'winner-undo
 	"wr" 'winner-redo
 	"wc" 'eyebrowse-create-window-config
@@ -98,12 +95,13 @@
   :init
   (setq evil-want-integration t)
   (setq evil-want-keybinding nil)
-
-  (setq evil-undo-system 'undo-fu)
   :hook
-  (after-init . evil-mode))
+  (after-init . evil-mode)
+  ;; :config
+  ;; (evil-global-set-key 'normal (kbd "u") 'vundo)
+  )
 
 (use-package evil-collection
   :after evil
   :config
-  (evil-collection-init '(calendar magit calc ediff org vterm)))
+  (evil-collection-init '(vterm calendar magit calc ediff org xwidget)))

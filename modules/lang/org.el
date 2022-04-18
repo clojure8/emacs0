@@ -34,7 +34,7 @@
 
 (use-package toc-org
   :hook ((markdown-mode . toc-org-mode)
-		 (org-mode . toc-org-mode)))
+         (org-mode . toc-org-mode)))
 
 (use-package deft
   :commands (deft)
@@ -57,26 +57,26 @@
         zk-grep-function #'zk-consult-grep)
 
   (defun zk-org-try-to-follow-link (fn &optional arg)
-	"When 'org-open-at-point' FN fails, try 'zk-follow-link-at-point'.
+    "When 'org-open-at-point' FN fails, try 'zk-follow-link-at-point'.
 Optional ARG."
-	(let ((org-link-search-must-match-exact-headline t))
+    (let ((org-link-search-must-match-exact-headline t))
       (condition-case nil
-		  (apply fn arg)
-		(error (zk-follow-link-at-point)))))
+          (apply fn arg)
+        (error (zk-follow-link-at-point)))))
 
   (advice-add 'org-open-at-point :around #'zk-org-try-to-follow-link)
 
   (defun zk-link-hint--zk-link-at-point-p ()
-	"Return the id of the zk-link at point or nil."
-	(thing-at-point-looking-at zk-link-regexp))
+    "Return the id of the zk-link at point or nil."
+    (thing-at-point-looking-at zk-link-regexp))
 
   (defun zk-link-hint--next-zk-link (&optional bound)
-	"Find the next zk-link.
+    "Find the next zk-link.
 Only search the range between just after the point and BOUND."
-	(link-hint--next-regexp zk-id-regexp bound))
+    (link-hint--next-regexp zk-id-regexp bound))
 
   (eval-when-compile
-	(link-hint-define-type 'zk-link
+    (link-hint-define-type 'zk-link
       :next #'zk-link-hint--next-zk-link
       :at-point-p #'zk-link-hint--zk-link-at-point-p
       :open #'zk-follow-link-at-point
@@ -85,14 +85,14 @@ Only search the range between just after the point and BOUND."
   (push 'link-hint-zk-link link-hint-types)
 
   (use-package zk-index
-	:after zk
-	:config
-	(zk-index-setup-embark)
-	:custom
-	(zk-index-desktop-directory zk-directory))
+    :after zk
+    :config
+    (zk-index-setup-embark)
+    :custom
+    (zk-index-desktop-directory zk-directory))
 
   (defvar zk-index-map
-	(let ((map (make-sparse-keymap)))
+    (let ((map (make-sparse-keymap)))
       (define-key map (kbd "n") #'zk-index-next-line)
       (define-key map (kbd "p") #'zk-index-previous-line)
       (define-key map (kbd "v") #'zk-index-view-note)
@@ -108,7 +108,7 @@ Only search the range between just after the point and BOUND."
       (define-key map (kbd "C") #'zk-index-sort-created)
       (define-key map (kbd "q") #'delete-window)
       (make-composed-keymap map tabulated-list-mode-map))
-	"Keymap for ZK-Index buffer.")
+    "Keymap for ZK-Index buffer.")
   )
 
 (use-package org-roam
@@ -143,5 +143,5 @@ Only search the range between just after the point and BOUND."
   (setq plantuml-executable-path "~/mytools/plantuml/bin/plantuml")
   (setq plantuml-default-exec-mode 'executable))
 
-; (use-package org-real
-;   :commands (org-real-apply org-real-world))
+(use-package org-real
+  :commands (org-real-apply org-real-world))

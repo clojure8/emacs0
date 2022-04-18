@@ -17,14 +17,13 @@
         '("\\*Messages\\*"
           "Output\\*$"
           "\\*Async Shell Command\\*"
-		  "\\*Launch.*\\*$"
-		  "*vterm*"
-		  "*eshell*"
-		  "*Dtache.*"
-		  "*quickrun*"
-		  "*devdocs*"
-		  "*Go-Translate*"
-		  "*PLANTUML Preview*"
+          "\\*Launch.*\\*$"
+          "*vterm*"
+          "*eshell*"
+          "*Dtache.*"
+          "*quickrun*"
+          "*Go-Translate*"
+          "*PLANTUML Preview*"
           help-mode
           compilation-mode))
   (popper-mode +1)

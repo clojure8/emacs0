@@ -6,6 +6,6 @@
   ;; (use-package s :defer t)
   ;; (add-hook 'after-save-hook
   ;;           (lambda () (when (s-ends-with? ".go" (buffer-name))
-  ;; 					(progn (lsp-format-buffer)
-  ;; 						   (save-buffer)))))
+  ;;                    (progn (lsp-format-buffer)
+  ;;                           (save-buffer)))))
   )

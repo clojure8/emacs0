@@ -8,7 +8,7 @@
 
 (use-package smart-hungry-delete
   :bind (("<backspace>" . smart-hungry-delete-backward-char)
-		 ("C-d" . smart-hungry-delete-forward-char))
+         ("C-d" . smart-hungry-delete-forward-char))
   :defer nil ;; dont defer so we can add our functions to hooks 
   :config (smart-hungry-delete-add-default-hooks))
 
@@ -58,3 +58,7 @@ Version 2016-04-04"
   (set-mark-command t))
 (global-set-key (kbd "<f7>") 'pop-global-mark)
 (global-set-key (kbd "<f8>") 'xah-pop-local-mark-ring)
+
+
+(provide 'init-editing)
+;;; init-editing.el ends here

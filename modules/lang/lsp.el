@@ -1,59 +1,47 @@
 ;; -*- coding: utf-8; lexical-binding: t; -*-
 
-
 (use-package lsp-mode
+  :bind
+  (:map lsp-mode-map
+        ("C-c C-d" . lsp-describe-thing-at-point)
+        ("s-<return>" . lsp-execute-code-action)
+        ("C-c C-r" . lsp-rename)
+        ("C-c C-f" . lsp-format-buffer)
+        ("C-c C-c" . lsp-execute-code-action)
+        ("C-c C-l" . lsp-lens-mode)
+        ("C-c C-i" . lsp-ui-doc-mode)
+        ("C-c C-t" . lsp-ui-sideline-mode)
+        ("C-c C-s" . lsp-ui-imenu)
+        ("C-c C-a" . lsp-ui-peek-find-definitions)
+        ("C-c C-b" . lsp-ui-peek-find-references)
+        ("C-c C-d" . lsp-ui-peek-find-definitions)
+        ("C-c C-e" . lsp-ui-peek-find-implementation)
+        ("C-c C-f" . lsp-ui-peek-find-references)
+        ("C-c C-g" . lsp-ui-peek-find-workspace-symbol)
+        ("C-c C-i" . lsp-ui-peek-find-implementation)
+        ("C-c C-j" . lsp-ui-peek-jump-backward)
+        ("C-c C-k" . lsp-ui-peek-jump-forward)
+        ("C-c C-l" . lsp-ui-peek-find-references)
+        ("C-c C-m" . lsp-ui-peek-find-implementation)
+        ("C-c C-n" . lsp-ui-peek-jump-backward)
+        ("C-c C-o" . lsp-ui-peek-find-definition)
+        ("C-c C-p" . lsp-ui-peek-jump-backward)
+        )
   :init
-  (setq lsp-keymap-prefix "C-c l")
+  (setq lsp-keymap-prefix "C-l")
   (setq lsp-headerline-breadcrumb-enable nil)
   :hook ((lsp-mode . lsp-enable-which-key-integration))
   :commands lsp)
 
-(use-package dap-mode
-  :commands (dap-debug)
-  :config
-  (require 'dap-go)
-  (require 'dap-hydra)
-  ;; Enabling only some features
-  (setq dap-auto-configure-features '(sessions locals controls tooltip))
-  (dap-mode 1)
-  (dap-ui-mode 1)
-  ;; enables mouse hover support
-  (dap-tooltip-mode 1)
-  ;; use tooltips for mouse hover
-  ;; if it is not enabled `dap-mode' will use the minibuffer.
-  (tooltip-mode 1)
-  ;; displays floating panel with debug buttons
-  ;; requies emacs 26+
-  (dap-ui-controls-mode 1))
 
-;; go hydra
-(use-package hydra
-  :after dap-mode
-  :config
-  (require 'hydra)
-  (require 'dap-mode)
-  (require 'dap-ui)
-  ;;:commands (ace-flyspell-setup)
-  :bind
-  (:map dap-mode-map
-		("M-g" . hydra-go/body))
-  :init
-  (defhydra hydra-go (:color pink :hint nil :foreign-keys run)
-	"
-   _n_: Next       _c_: Continue _g_: goroutines      _i_: break log
-   _s_: Step in    _o_: Step out _k_: break condition _h_: break hit condition
-   _Q_: Disconnect _q_: quit     _l_: locals
-   "
-	("n" dap-next)
-	("c" dap-continue)
-	("s" dap-step-in)
-	("o" dap-step-out)
-	("g" dap-ui-sessions)
-	("l" dap-ui-locals)
-	("e" dap-eval-thing-at-point)
-	("h" dap-breakpoint-hit-condition)
-	("k" dap-breakpoint-condition)
-	("i" dap-breakpoint-log-message)
-	("q" nil "quit" :color blue)
-	("Q" dap-disconnect :color red))
-  (add-hook 'dap-stopped-hook (lambda (arg) (call-interactively #'hydra-go/body))))
+(use-package lsp-ui
+  :after lsp-mode
+  :commands lsp-ui-mod
+  )
+
+(use-package consult-lsp :after lsp-mode)
+(use-package lsp-treemacs :after lsp-mode)
+
+
+(provide 'init-lsp)
+;;; init-lsp.el ends here

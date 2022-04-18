@@ -1,6 +1,10 @@
 ;; -*- coding: utf-8; lexical-binding: t; -*-
 
-(use-package magit :defer t)
+(use-package magit
+  :defer t
+  :commands (magit magit-status))
+
+(use-package git-gutter+ :defer t)
 
 (use-package all-the-icons :defer t)
 
@@ -22,7 +26,10 @@
   ("C-c l o" . link-hint-open-link)
   ("C-c l c" . link-hint-copy-link))
 
-(use-package which-key :defer t)
+(use-package which-key
+  :defer t
+  :config
+  (which-key-mode))
 
 (use-package go-translate
   :commands
@@ -94,7 +101,6 @@
   :commands (annotate-annotate))
 
 (use-package vundo
-  :commands (vundo)
   :load-path "~/elisp/vundo/"
   :config
   ;; Take less on-screen space.
@@ -107,7 +113,5 @@
    '(vundo-highlight ((t (:foreground "#FFFF00")))))
   )
 
-
-(use-package editorconfig :defer t)
 
 (use-package dirvish :defer t)

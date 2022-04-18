@@ -3,7 +3,7 @@
 ;; 启动完成的时候显示耗时信息
 (add-hook 'emacs-startup-hook
           (lambda ()
-            (message "Emacs ready in %s with %d garbage collections."
+            (message "emacs ready in %s with %d garbage collections."
                      (format "%.2f seconds" (float-time (time-subtract after-init-time before-init-time)))
                      gcs-done)))
 
@@ -25,23 +25,24 @@
 (eval-and-compile
   (customize-set-variable
    'package-archives '(
-					   ("org" . "https://orgmode.org/elpa/")
+                       ("org" . "https://orgmode.org/elpa/")
                        ("melpa" . "https://melpa.org/packages/")
                        ("gnu" . "https://elpa.gnu.org/packages/")
-					   ;; ("gnu"   . "http://elpa.zilongshanren.com/gnu/")
+                       ("nongnu" . "https://elpa.nongnu.org/nongnu/")
+                       ;; ("gnu"   . "http://elpa.zilongshanren.com/gnu/")
                        ;; ("melpa" . "http://elpa.zilongshanren.com/melpa/")
-					   ;; ("org" . "http://elpa.zilongshanren.com/org/")
-					   ;; ("mepla-stable" . "http://elpa.zilongshanren.com/stable-melpa/")
-					   ))
+                       ;; ("org" . "http://elpa.zilongshanren.com/org/")
+                       ;; ("mepla-stable" . "http://elpa.zilongshanren.com/stable-melpa/")
+                       ))
   (package-initialize)
 
   ;;防止反复调用 package-refresh-contents 会影响加载速度
   (when (not package-archive-contents)
-	(package-refresh-contents))
+    (package-refresh-contents))
 
   (unless (package-installed-p 'use-package)
     (package-refresh-contents)
-	(package-install 'use-package))
+    (package-install 'use-package))
 
   (require 'use-package-ensure)
   (setq use-package-always-ensure t)
@@ -51,19 +52,19 @@
   :demand
   :config
   (with-eval-after-load 'recentf
-	(setq my/etc-directory (expand-file-name "var/config/" user-emacs-directory))
-	(setq my/var-directory (expand-file-name "var/data/" user-emacs-directory))
-	(add-to-list 'recentf-exclude (expand-file-name "etc/elpa" user-emacs-directory))
-	(add-to-list 'recentf-exclude my/etc-directory)
-	(add-to-list 'recentf-exclude my/var-directory)))
+    (setq my/etc-directory (expand-file-name "var/config/" user-emacs-directory))
+    (setq my/var-directory (expand-file-name "var/data/" user-emacs-directory))
+    (add-to-list 'recentf-exclude (expand-file-name "etc/elpa" user-emacs-directory))
+    (add-to-list 'recentf-exclude my/etc-directory)
+    (add-to-list 'recentf-exclude my/var-directory)))
 
-(add-hook 'after-init-hook 
-		  (lambda ()
-			;; write over selected text on input... like all modern editors do
-			(delete-selection-mode t)
-			;; 自动加载修改过的文件
-			(global-auto-revert-mode 1)
-			(recentf-mode +1)))
+(add-hook 'after-init-hook
+          (lambda ()
+            ;; write over selected text on input... like all modern editors do
+            (delete-selection-mode t)
+            ;; 自动加载修改过的文件
+            (global-auto-revert-mode 1)
+            (recentf-mode +1)))
 
 (add-hook 'prog-mode-hook  #'hl-line-mode)
 
@@ -95,8 +96,8 @@
 
 (cl-defun load-modules (&optional (modules-dir "modules"))
   (let ((dir (expand-file-name modules-dir user-emacs-directory)))
-	(when (f-directory? dir)
-	  (load-dir dir my-libs-loaded)
-	  (f-directories dir (lambda (d) (load-modules d))))))
+    (when (f-directory? dir)
+      (load-dir dir my-libs-loaded)
+      (f-directories dir (lambda (d) (load-modules d))))))
 
 (load-modules)

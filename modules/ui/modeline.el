@@ -1,7 +1,7 @@
 ;; -*- coding: utf-8; lexical-binding: t; -*-
 ;;; code:
 
-(use-package mood-line :defer t)
+;; (use-package mood-line :defer t)
 ;; :hook (after-init . mood-line-mode))
 
 (use-package hide-mode-line :commands (hide-mode-line-mode))
@@ -10,10 +10,10 @@
   :load-path "~/elisp/awesome-tray"
   :config
   (defun my/vc-info (&rest _)
-    (when (and vc-mode buffer-file-name)
+	(when (and vc-mode buffer-file-name)
 	  (let ((backend (vc-backend buffer-file-name))
-            (state (vc-state buffer-file-name (vc-backend buffer-file-name))))
-        (let ((face 'mode-line-neutral))
+			(state (vc-state buffer-file-name (vc-backend buffer-file-name))))
+		(let ((face 'mode-line-neutral))
 		  (concat "" (cond ((memq state '(edited added))
 							(setq face 'mood-line-status-info)
 							(propertize "+ " 'face face))
@@ -35,22 +35,22 @@
 				  "")))))
 
   (defun my/flycheck-info (&optional status)
-    (pcase flycheck-last-status-change
+	(pcase flycheck-last-status-change
 	  ('finished (if flycheck-current-errors
 					 (let-alist (flycheck-count-errors flycheck-current-errors)
 					   (let ((sum (+ (or .error 0) (or .warning 0))))
-						 (propertize (concat "⚑ Issues: "
-											 (number-to-string sum)
-											 "")
-									 'face (if .error
-											   'mood-line-status-error
-											 'mood-line-status-warning))))
-				   (propertize "✓ Good" 'face 'mood-line-status-success)))
-	  ('running (propertize "Δ Checking" 'face 'mood-line-status-info))
-	  ('errored (propertize "✗ Error" 'face 'mood-line-status-error))
-	  ('interrupted (propertize "⏸ Paused" 'face 'mood-line-status-neutral))
-	  ('no-checked "")
-	  (x "")))
+						 (list (concat "⚑ Issues: "
+									   (number-to-string sum)
+									   "")
+							   (if .error
+								   mood-line-status-error
+								 mood-line-status-warning))))
+				   (list "✓ Good" mood-line-status-success)))
+	  ('running (list "Δ Checking" mood-line-status-info))
+	  ('errored (list "✗ Error" mood-line-status-error))
+	  ('interrupted (list "= Paused" mood-line-status-neutral))
+	  ('no-checked (list "" mood-line-unimportant))
+	  (x (list "" mood-line-unimportant))))
 
   (defun my/lsp-mode-info () (assoc 'lsp-mode minor-mode-alist))
 
@@ -72,8 +72,8 @@
   (add-to-list 'awesome-tray-module-alist '("eol" . (my/encode-info awesome-tray-module-file-path-face)))
   (add-to-list 'awesome-tray-module-alist '("encode" . (my/eol-info awesome-tray-module-awesome-tab-face)))
   (add-to-list 'awesome-tray-module-alist '("vc" . (my/vc-info awesome-tray-module-evil-face)))
-  (add-to-list 'awesome-tray-module-alist '("flycheck" . (my/flycheck-info awesome-tray-module-file-path-face)))
+  (add-to-list 'awesome-tray-module-alist '("flycheck" . my/flycheck-info ))
 
-  (setq awesome-tray-active-modules '("evil" "file-path" "mode-name" "vc" "encode" "eol" "date"))
+  (setq awesome-tray-active-modules '("evil" "buffer-name" "file-path" "mode-name" "vc" "encode" "eol" "date"))
   (awesome-tray-mode)
   )

@@ -3,12 +3,12 @@
 ;;; code:
 
 ;; (setq my-theme 'doom-dracula)
-;; (setq my-theme 'modus-operandi)
+(setq my-theme 'modus-operandi)
 ;;(setq my-theme 'modus-vivendi)
 ;;(setq my-theme 'doom-xcode)
 ;; (setq my-theme 'doom-monokai-pro)
 ;; (setq my-theme 'doom-one-light)
-(setq my-theme 'doom-one)
+;; (setq my-theme 'doom-one)
 ;; (setq my-theme 'leuven)
 ;; (setq my-theme 'kaolin-galaxy)
 ;; (setq my-theme 'leuven-dark)
@@ -34,3 +34,6 @@
 (use-package cyberpunk-theme :defer t)
 (use-package stimmung-themes :defer t)
 (use-package humanoid-themes :defer t)
+
+(provide 'init-themes)
+;;; init-themes.el ends here

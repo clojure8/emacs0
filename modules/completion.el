@@ -19,75 +19,31 @@
 (use-package orderless
   :after vertico
   :config
-  ;; (defun +vertico-orderless-dispatch (pattern _index _total)
-  ;; (cond
-  ;;  ;; Ensure $ works with Consult commands, which add disambiguation suffixes
-  ;;  ((string-suffix-p "$" pattern)
-  ;;   `(orderless-regexp . ,(concat (substring pattern 0 -1) "[\x100000-\x10FFFD]*$")))
-  ;;  ;; Ignore single !
-  ;;  ((string= "!" pattern) `(orderless-literal . ""))
-  ;;  ;; Without literal
-  ;;  ((string-prefix-p "!" pattern) `(orderless-without-literal . ,(substring pattern 1)))
-  ;;  ;; Character folding
-  ;;  ((string-prefix-p "%" pattern) `(char-fold-to-regexp . ,(substring pattern 1)))
-  ;;  ((string-suffix-p "%" pattern) `(char-fold-to-regexp . ,(substring pattern 0 -1)))
-  ;;  ;; Initialism matching
-  ;;  ((string-prefix-p "`" pattern) `(orderless-initialism . ,(substring pattern 1)))
-  ;;  ((string-suffix-p "`" pattern) `(orderless-initialism . ,(substring pattern 0 -1)))
-  ;;  ;; Literal matching
-  ;;  ((string-prefix-p "=" pattern) `(orderless-literal . ,(substring pattern 1)))
-  ;;  ((string-suffix-p "=" pattern) `(orderless-literal . ,(substring pattern 0 -1)))
-  ;;  ;; Flex matching
-  ;;  ((string-prefix-p "~" pattern) `(orderless-flex . ,(substring pattern 1)))
-  ;;  ((string-suffix-p "~" pattern) `(orderless-flex . ,(substring pattern 0 -1)))))
-  ;; (setq completion-styles '(orderless)
-  ;;       completion-category-defaults nil
-  ;;       ;; note that despite override in the name orderless can still be used in
-  ;;       ;; find-file etc.
-  ;;       completion-category-overrides '((file (styles orderless partial-completion)))
-  ;;       ;; orderless-style-dispatchers '(+vertico-orderless-dispatch)
-  ;;       orderless-component-separator "[ &]")
-  ;; ;; ...otherwise find-file gets different highlighting than other commands
-  ;; (set-face-attribute 'completions-first-difference nil :inherit nil)
   (defun sanityinc/use-orderless-in-minibuffer ()
-	(setq-local completion-styles '(substring orderless)))
+    (setq-local completion-styles '(substring orderless)))
   (add-hook 'minibuffer-setup-hook 'sanityinc/use-orderless-in-minibuffer)
   )
 
 (use-package consult
-  ;; Enable automatic preview at point in the *Completions* buffer. This is
-  ;; relevant when you use the default completion UI.
+  :bind (([remap imenu]              . consult-imenu)
+         ([remap goto-line]          . consult-goto-line)
+         ([remap bookmark-jump]      . consult-bookmark)
+         ([remap recentf-open-files] . consult-recent-file)
+         ([remap evil-show-marks]    . consult-mark))
+
   :hook (completion-list-mode . consult-preview-at-point-mode)
 
   :init
-  ;; Optionally configure the register formatting. This improves the register
-  ;; preview for `consult-register', `consult-register-load',
-  ;; `consult-register-store' and the Emacs built-ins.
   (setq register-preview-delay 0.5
         register-preview-function #'consult-register-format)
 
-  ;; Optionally tweak the register preview window.
-  ;; This adds thin lines, sorting and hides the mode line of the window.
   (advice-add #'register-preview :override #'consult-register-window)
-
-  ;; Optionally replace `completing-read-multiple' with an enhanced version.
   (advice-add #'completing-read-multiple :override #'consult-completing-read-multiple)
 
-  ;; Use Consult to select xref locations with preview
   (setq xref-show-xrefs-function #'consult-xref
         xref-show-definitions-function #'consult-xref)
 
-  ;; Configure other variables and modes in the :config section,
-  ;; after lazily loading the package.
   :config
-
-  ;; Optionally configure preview. The default value
-  ;; is 'any, such that any key triggers the preview.
-  ;; (setq consult-preview-key 'any)
-  ;; (setq consult-preview-key (kbd "M-."))
-  ;; (setq consult-preview-key (list (kbd "<S-down>") (kbd "<S-up>")))
-  ;; For some commands and buffer sources it is useful to configure the
-  ;; :preview-key on a per-command basis using the `consult-customize' macro.
   (consult-customize
    consult-theme
    :preview-key '(:debounce 0.2 any)
@@ -97,8 +53,6 @@
    consult--source-project-recent-file
    :preview-key (kbd "M-."))
 
-  ;; Optionally configure the narrowing key.
-  ;; Both < and C-+ work reasonably well.
   (setq consult-narrow-key "<") ;; (kbd "C-+")
 
   ;; Optionally make narrowing help available in the minibuffer.
@@ -142,10 +96,8 @@
    ("C-;" . embark-dwim)        ;; good alternative: M-.
    ("C-h B" . embark-bindings)) ;; alternative for `describe-bindings'
   :init
-  ;; Optionally replace the key help with a completing-read interface
   (setq prefix-help-command #'embark-prefix-help-command)
   :config
-  ;; Hide the mode line of the Embark live/completions buffers
   (add-to-list 'display-buffer-alist
                '("\\`\\*Embark Collect \\(Live\\|Completions\\)\\*"
                  nil
@@ -156,7 +108,10 @@
   :hook
   (embark-collect-mode . consult-preview-at-point-mode))
 
-(use-package company :hook (after-init . global-company-mode))
+(use-package company
+  :defer t
+  :hook (after-init . global-company-mode)
+  )
 
 (use-package yasnippet :hook (prog-mode . yas-global-mode))
 
@@ -166,3 +121,69 @@
   :after (yasnippet))
 
 (use-package gitignore-templates :defer t)
+
+;; (use-package corfu
+;;   :defer t
+;;   :custom
+;;   ;; (corfu-cycle t)                ;; Enable cycling for `corfu-next/previous'
+;;   ;; (corfu-auto t)                 ;; Enable auto completion
+;;   ;; (corfu-separator ?\s)          ;; Orderless field separator
+;;   ;; (corfu-quit-at-boundary t)   ;; Never quit at completion boundary
+;;   (corfu-quit-no-match t)      ;; Never quit, even if there is no match
+;;   ;; (corfu-preview-current nil)    ;; Disable current candidate preview
+;;   ;; (corfu-preselect-first nil)    ;; Disable candidate preselection
+;;   ;; (corfu-on-exact-match nil)     ;; Configure handling of exact matches
+;;   ;; (corfu-echo-documentation nil) ;; Disable documentation in the echo area
+;;   ;; (corfu-scroll-margin 5)        ;; Use scroll margin
+;;   :config
+;;   (defun corfu-enable-in-minibuffer ()
+;;  "Enable Corfu in the minibuffer if `completion-at-point' is bound."
+;;  (when (where-is-internal #'completion-at-point (list (current-local-map)))
+;;       ;; (setq-local corfu-auto nil) Enable/disable auto completion
+;;       (corfu-mode 1)))
+;;   (add-hook 'minibuffer-setup-hook #'corfu-enable-in-minibuffer)
+
+;;   ;; (corfu-global-mode)
+;;   )
+
+;; (use-package emacs
+;;   :init
+;;   ;; TAB cycle if there are only few candidates
+;;   (setq completion-cycle-threshold 1)
+
+;;   ;; Emacs 28: Hide commands in M-x which do not apply to the current mode.
+;;   ;; Corfu commands are hidden, since they are not supposed to be used via M-x.
+;;   (setq read-extended-command-predicate
+;;         #'command-completion-default-include-p)
+
+;;   ;; Enable indentation+completion using the TAB key.
+;;   ;; `completion-at-point' is often bound to M-TAB.
+;;   (setq tab-always-indent 'complete))
+
+
+;; (use-package cape
+;;   :bind (("M-/" . completion-at-point) ;; capf
+;;          ("C-c p t" . complete-tag)        ;; etags
+;;          ("C-c p d" . cape-dabbrev)        ;; or dabbrev-completion
+;;          ("C-c p f" . cape-file)
+;;          ("C-c p k" . cape-keyword)
+;;          ("C-c p s" . cape-symbol)
+;;          ("C-c p a" . cape-abbrev)
+;;          ("C-c p i" . cape-ispell)
+;;          ("C-c p l" . cape-line)
+;;          ("C-c p w" . cape-dict)
+;;          ("C-c p \\" . cape-tex)
+;;          ("C-c p _" . cape-tex)
+;;          ("C-c p ^" . cape-tex)
+;;          ("C-c p &" . cape-sgml)
+;;          ("C-c p r" . cape-rfc1345))
+;;   :config
+;;   (add-to-list 'completion-at-point-functions #'cape-file)
+;;   (add-to-list 'completion-at-point-functions #'cape-dabbrev)
+
+;;   ;; Use Company backends as Capfs.
+;;   (setq-local completion-at-point-functions
+;;            (mapcar #'cape-company-to-capf
+;;                    (list #'company-files #'company-ispell #'company-dabbrev)))
+
+;;   )

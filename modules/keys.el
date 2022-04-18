@@ -3,15 +3,6 @@
 (global-set-key (kbd "M-z") 'vundo)
 
 (use-package general
-  :init
-  (setq general-override-states '(insert
-                                  emacs
-                                  hybrid
-                                  normal
-                                  visual
-                                  motion
-                                  operator
-                                  replace))
   :config
   (general-define-key
    :states '(normal visual motion)
